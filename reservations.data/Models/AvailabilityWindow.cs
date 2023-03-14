@@ -39,7 +39,6 @@ namespace Reservations.Data.Models
         /// The timestamp when the availability window record was created.
         /// </summary>
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime CreatedAt { get; set; }
 
         /// <summary>

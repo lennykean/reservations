@@ -38,9 +38,7 @@ namespace Reservations.Data.Migrations
                     StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ConfirmedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    Expired = table.Column<bool>(type: "INTEGER", nullable: false, computedColumnSql: "CASE WHEN CreatedAt < DATETIME('now', '-30 minutes') THEN 1 ELSE 0 END"),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

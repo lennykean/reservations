@@ -46,6 +46,7 @@ namespace Reservations.Controllers
             if (overlapping)
                 return Conflict("The availability window overlaps with another availability window.");
 
+            availabilityWindow.CreatedAt = DateTime.UtcNow;
             availabilityWindow.ProviderId = providerId;
             _context.AvailabilityWindow.Add(availabilityWindow);
             await _context.SaveChangesAsync();
@@ -66,8 +67,9 @@ namespace Reservations.Controllers
                 var currentEndTime = availabilityWindow.End;
 
                 // Retrieve non-expired reservations for the current availability window, ordered by start time
+                var now = DateTime.UtcNow;
                 var reservations = availabilityWindow.Reservations
-                    .Where(r => !r.Expired)
+                    .Where(r => r.ConfirmedAt != null || r.CreatedAt < now.AddMinutes(30))
                     .OrderBy(r => r.StartTime)
                     .ToList();
 

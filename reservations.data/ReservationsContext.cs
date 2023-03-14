@@ -21,12 +21,5 @@ namespace Reservations.Data
 
             options.UseSqlite($"Data Source={dbPath}");
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Reservation>()
-                .Property(r => r.Expired)
-                .HasComputedColumnSql("CASE WHEN CreatedAt < DATETIME('now', '-30 minutes') THEN 1 ELSE 0 END");
-        }
     }
 }

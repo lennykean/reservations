@@ -50,22 +50,9 @@ namespace Reservations.Data.Models
         public DateTime? ConfirmedAt { get; set; }
 
         /// <summary>
-        /// Indicates whether the reservation is expired.
-        /// </summary>
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public bool Expired { get; private set; }
-
-        /// <summary>
         /// The timestamp when the reservation was created.
         /// </summary>
-        [Required]
         public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// The timestamp when the reservation was last updated.
-        /// </summary>
-        [Required]
-        public DateTime LastUpdatedAt { get; set; }
 
         /// <summary>
         /// The navigation property for the associated availability window.

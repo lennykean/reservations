@@ -26,16 +26,14 @@ namespace Reservations.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] Reservation reservation, string providerId, [FromQuery, BindRequired] string clientId)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             // Check if the reservation is more than 24 hours in the future
             if (reservation.StartTime <= DateTime.UtcNow.AddHours(24))
                 return BadRequest("Reservations must be made at least 24 hours in advance.");
 
+            var now = DateTime.UtcNow;
             // Check if there are any overlapping reservations for the given provider
             var overlappingReservations = await _context.Reservations
-                .Where(r => r.AvailabilityWindow.ProviderId == providerId && !r.Expired &&
+                .Where(r => r.AvailabilityWindow.ProviderId == providerId && (r.ConfirmedAt != null || r.CreatedAt < now.AddMinutes(30)) &&
                             ((reservation.StartTime <= r.StartTime && reservation.EndTime > r.StartTime) ||
                             (reservation.StartTime < r.EndTime && reservation.EndTime >= r.EndTime) ||
                             (reservation.StartTime > r.StartTime && reservation.EndTime < r.EndTime)))
@@ -46,11 +44,13 @@ namespace Reservations.Controllers
             // Check if the reservation is within an availability window
             var availabilityWindow = await _context.AvailabilityWindow
                 .Where(aw => aw.ProviderId == providerId && reservation.StartTime >= aw.Start && reservation.EndTime <= reservation.EndTime)
-                .SingleOrDefaultAsync();
+                .OrderBy(aw => aw.Start)
+                .FirstOrDefaultAsync();
 
             if (availabilityWindow == null)
                 return BadRequest("The reservation is not within an availability window.");
 
+            reservation.CreatedAt = DateTime.UtcNow;
             reservation.ClientId = clientId;
             reservation.AvailabilityWindow = availabilityWindow;
 
@@ -64,8 +64,9 @@ namespace Reservations.Controllers
         [HttpPost("{reservationId}/Confirm")]
         public async Task<IActionResult> Confirm(string providerId, int reservationId, [FromQuery, BindRequired] string clientId)
         {
+            var now = DateTime.UtcNow;
             var reservation = await _context.Reservations
-                .FirstOrDefaultAsync(r => r.Id == reservationId && r.AvailabilityWindow.ProviderId == providerId && r.ClientId == clientId && !r.Expired);
+                .FirstOrDefaultAsync(r => r.Id == reservationId && r.AvailabilityWindow.ProviderId == providerId && r.ClientId == clientId && (r.ConfirmedAt != null || r.CreatedAt < now.AddMinutes(30)));
 
             if (reservation == null)
                 return NotFound("Reservation not found.");

@@ -24,7 +24,6 @@ namespace Reservations.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("End")
@@ -62,14 +61,6 @@ namespace Reservations.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Expired")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("INTEGER")
-                        .HasComputedColumnSql("CASE WHEN CreatedAt < DATETIME('now', '-30 minutes') THEN 1 ELSE 0 END");
-
-                    b.Property<DateTime>("LastUpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartTime")
