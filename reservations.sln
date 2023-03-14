@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reservations", "reservations\reservations.csproj", "{872E1C7E-8FD2-4C14-A652-B712E0AB17EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "reservations.data", "reservations.data\reservations.data.csproj", "{49EE1FB8-2A23-418C-8AD5-172B1BF1357A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{872E1C7E-8FD2-4C14-A652-B712E0AB17EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872E1C7E-8FD2-4C14-A652-B712E0AB17EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872E1C7E-8FD2-4C14-A652-B712E0AB17EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872E1C7E-8FD2-4C14-A652-B712E0AB17EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49EE1FB8-2A23-418C-8AD5-172B1BF1357A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EE1FB8-2A23-418C-8AD5-172B1BF1357A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EE1FB8-2A23-418C-8AD5-172B1BF1357A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EE1FB8-2A23-418C-8AD5-172B1BF1357A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
