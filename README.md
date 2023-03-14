@@ -16,3 +16,4 @@ A simple API for managing reservations and availability windows for service prov
 - **Database**: SQLite is not a suitable production database. This should be swapped out for an external datastore.
   - It would be a good idea to use computed columes for expiration, and created dates, but sqlite doesn't support that for non-deterministic data
 - **Security**: It's assumed that authorization and SSL will be provided by a reverse proxy or API gateway.
+- **API**: It would be a good enhancement to create bespoke input models for creating availability windows and reservations
