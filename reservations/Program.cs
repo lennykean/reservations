@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+
+using Reservations.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ReservationsContext>(options => options.UseSqlite()); // Would be replaced with something other than sqlite
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -14,9 +19,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ReservationsContext>();
+
+        dbContext.Database.Migrate();
+    }
+}
 
 app.UseAuthorization();
 
